@@ -44,3 +44,79 @@
   transform: scale(1.05);
   background-color: #0056b3;
 }
+
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #2c3e50;
+}
+
+.tasks-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.add-task {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.add-task input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.tasks-remaining {
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.history-container {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  padding: 25px;
+  margin-top: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.history-day {
+  margin-bottom: 20px;
+}
+
+.history-task {
+  padding: 5px 0;
+}
+
+.install-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}

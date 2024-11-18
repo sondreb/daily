@@ -1,6 +1,44 @@
 <div class="fullscreen-container">
-  <img src="/icons/icon-1024x1024.png" alt="Dreams Logo" class="logo" />
-  <h1>In development...</h1>
+  <div class="app-container">
+    <h1>Daily Tasks</h1>
+    
+    <div class="tasks-container">
+      <div class="add-task" *ngIf="currentTasks?.tasks?.length !== 3">
+        <input 
+          type="text" 
+          [(ngModel)]="newTaskTitle" 
+          placeholder="Add new task..."
+          (keyup.enter)="addTask()"
+        >
+        <button (click)="addTask()">Add</button>
+      </div>
+
+      <div class="tasks-list">
+        <div *ngFor="let task of currentTasks?.tasks" class="task-item">
+          <input 
+            type="checkbox" 
+            [checked]="task.completed"
+            (change)="toggleTask(task.id)"
+          >
+          <span [class.completed]="task.completed">{{task.title}}</span>
+        </div>
+      </div>
+
+      <div class="tasks-remaining" *ngIf="currentTasks">
+        {{ 3 - (currentTasks.tasks.length) }} tasks remaining today
+      </div>
+    </div>
+
+    <div class="history-container" *ngIf="history.length > 0">
+      <h2>Previous Days</h2>
+      <div *ngFor="let day of history" class="history-day">
+        <h3>{{day.date}}</h3>
+        <div *ngFor="let task of day.tasks" class="history-task">
+          <span [class.completed]="task.completed">{{task.title}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
   <button *ngIf="showInstallButton" (click)="installPwa()" class="install-button">
     Install App
   </button>
