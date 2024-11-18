@@ -59,16 +59,6 @@
         {{ 3 - currentTasks.tasks.length }} tasks remaining today
       </div>
     </div>
-
-    <div class="history-container" *ngIf="history.length > 0">
-      <h2>Previous Days</h2>
-      <div *ngFor="let day of history" class="history-day">
-        <h3>{{ day.date }}</h3>
-        <div *ngFor="let task of day.tasks" class="history-task">
-          <span [class.completed]="task.completed">{{ task.title }}</span>
-        </div>
-      </div>
-    </div>
   </div>
   <button
     *ngIf="showInstallButton"

@@ -98,22 +98,6 @@
   color: #666;
 }
 
-.history-container {
-  background: rgba(255, 255, 255, 0.85);
-  border-radius: 12px;
-  padding: 25px;
-  margin-top: 20px;
-  backdrop-filter: blur(10px);
-}
-
-.history-day {
-  margin-bottom: 20px;
-}
-
-.history-task {
-  padding: 5px 0;
-}
-
 .install-button {
   position: fixed;
   bottom: 20px;

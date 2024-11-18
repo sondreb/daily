@@ -6,59 +6,49 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class TaskService {
-  private readonly STORAGE_KEY = 'daily-tasks';
+  private readonly STORAGE_PREFIX = 'daily-tasks-';
   private tasksSubject = new BehaviorSubject<DailyTasks | null>(null);
-  private historySubject = new BehaviorSubject<DailyTasks[]>([]);
   private selectedDateSubject = new BehaviorSubject<string>(new Date().toISOString().split('T')[0]);
 
   constructor() {
-    this.loadTasks();
+    const today = new Date().toISOString().split('T')[0];
+    this.selectedDateSubject.next(today);
+    this.loadTasks(today);
     this.checkForNewDay();
-    setInterval(() => this.checkForNewDay(), 60000); // Check every minute
+    setInterval(() => this.checkForNewDay(), 60000);
   }
 
-  private loadTasks() {
-    const stored = localStorage.getItem(this.STORAGE_KEY);
+  private getStorageKey(date: string): string {
+    return `${this.STORAGE_PREFIX}${date}`;
+  }
+
+  private loadTasks(date: string) {
+    const stored = localStorage.getItem(this.getStorageKey(date));
+    
     if (stored) {
-      const data = JSON.parse(stored);
-      this.tasksSubject.next(data.current);
-      this.historySubject.next(data.history);
+      this.tasksSubject.next(JSON.parse(stored));
+    } else {
+      this.tasksSubject.next({ date, tasks: [] });
     }
   }
 
-  private saveTasks() {
-    const data = {
-      current: this.tasksSubject.value,
-      history: this.historySubject.value
-    };
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+  private saveTasks(tasks: DailyTasks) {
+    localStorage.setItem(this.getStorageKey(tasks.date), JSON.stringify(tasks));
   }
 
   private checkForNewDay() {
     const now = new Date();
     const currentDate = now.toISOString().split('T')[0];
-    const current = this.tasksSubject.value;
+    const selectedDate = this.selectedDateSubject.value;
 
-    // Update selected date to today if we're on tomorrow's date
-    if (this.selectedDateSubject.value > currentDate) {
+    if (selectedDate !== currentDate) {
       this.selectedDateSubject.next(currentDate);
-    }
-
-    if (!current || current.date !== currentDate) {
-      if (current) {
-        this.historySubject.next([current, ...this.historySubject.value]);
-      }
-      this.tasksSubject.next({ date: currentDate, tasks: [] });
-      this.saveTasks();
+      this.loadTasks(currentDate);
     }
   }
 
   getTasks(): Observable<DailyTasks | null> {
     return this.tasksSubject.asObservable();
-  }
-
-  getHistory(): Observable<DailyTasks[]> {
-    return this.historySubject.asObservable();
   }
 
   getSelectedDate(): Observable<string> {
@@ -69,22 +59,10 @@ export class TaskService {
     const today = new Date().toISOString().split('T')[0];
     const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
     
-    // Only allow navigation to today, tomorrow, or past dates
     if (date > tomorrow) return;
     
     this.selectedDateSubject.next(date);
-    
-    // Initialize empty task list if none exists for this date
-    const current = this.tasksSubject.value;
-    if (!current || current.date !== date) {
-      const historicalDay = this.historySubject.value.find(d => d.date === date);
-      if (historicalDay) {
-        this.tasksSubject.next(historicalDay);
-      } else {
-        this.tasksSubject.next({ date, tasks: [] });
-      }
-      this.saveTasks();
-    }
+    this.loadTasks(date);
   }
 
   addTask(title: string): boolean {
@@ -95,12 +73,16 @@ export class TaskService {
       id: Date.now().toString(),
       title,
       completed: false,
-      date: new Date().toISOString()
+      date: current.date
     };
 
-    current.tasks.push(newTask);
-    this.tasksSubject.next(current);
-    this.saveTasks();
+    const updatedTasks = {
+      ...current,
+      tasks: [...current.tasks, newTask]
+    };
+
+    this.tasksSubject.next(updatedTasks);
+    this.saveTasks(updatedTasks);
     return true;
   }
 
@@ -108,23 +90,33 @@ export class TaskService {
     const current = this.tasksSubject.value;
     if (!current) return;
 
-    const task = current.tasks.find(t => t.id === taskId);
-    if (task) {
-      task.completed = !task.completed;
-      this.tasksSubject.next(current);
-      this.saveTasks();
-    }
+    const updatedTasks = {
+      ...current,
+      tasks: current.tasks.map(task => 
+        task.id === taskId 
+          ? { ...task, completed: !task.completed }
+          : task
+      )
+    };
+
+    this.tasksSubject.next(updatedTasks);
+    this.saveTasks(updatedTasks);
   }
 
   updateTask(taskId: string, newTitle: string) {
     const current = this.tasksSubject.value;
     if (!current) return;
 
-    const task = current.tasks.find(t => t.id === taskId);
-    if (task) {
-      task.title = newTitle;
-      this.tasksSubject.next(current);
-      this.saveTasks();
-    }
+    const updatedTasks = {
+      ...current,
+      tasks: current.tasks.map(task =>
+        task.id === taskId
+          ? { ...task, title: newTitle }
+          : task
+      )
+    };
+
+    this.tasksSubject.next(updatedTasks);
+    this.saveTasks(updatedTasks);
   }
 }

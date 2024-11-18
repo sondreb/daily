@@ -17,7 +17,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   showInstallButton = false;
   newTaskTitle = '';
   currentTasks: DailyTasks | null = null;
-  history: DailyTasks[] = [];
   editingTaskId: string | null = null;
   editingTaskText: string = '';
   selectedDate: string = '';
@@ -37,10 +36,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
     // Subscribe to tasks
     this.taskService.getTasks().subscribe(tasks => {
       this.currentTasks = tasks;
-    });
-
-    this.taskService.getHistory().subscribe(history => {
-      this.history = history;
     });
 
     this.taskService.getSelectedDate().subscribe(date => {
