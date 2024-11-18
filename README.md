@@ -1,5 +1,5 @@
 <div align="center">
-	<img style="border-radius: 20px" src="public/favicon.jpg" width="96">
+	<img style="border-radius: 20px" src="public/favicon.png" width="96">
 	<h1>Daily</h1>
 	<h3>Tree tasks and no more. Plan one day ahead. Tomorrow is a new day.</h3>
 	<br>
