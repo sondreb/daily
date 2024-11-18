@@ -9,6 +9,7 @@ export class TaskService {
   private readonly STORAGE_KEY = 'daily-tasks';
   private tasksSubject = new BehaviorSubject<DailyTasks | null>(null);
   private historySubject = new BehaviorSubject<DailyTasks[]>([]);
+  private selectedDateSubject = new BehaviorSubject<string>(new Date().toISOString().split('T')[0]);
 
   constructor() {
     this.loadTasks();
@@ -38,6 +39,11 @@ export class TaskService {
     const currentDate = now.toISOString().split('T')[0];
     const current = this.tasksSubject.value;
 
+    // Update selected date to today if we're on tomorrow's date
+    if (this.selectedDateSubject.value > currentDate) {
+      this.selectedDateSubject.next(currentDate);
+    }
+
     if (!current || current.date !== currentDate) {
       if (current) {
         this.historySubject.next([current, ...this.historySubject.value]);
@@ -53,6 +59,32 @@ export class TaskService {
 
   getHistory(): Observable<DailyTasks[]> {
     return this.historySubject.asObservable();
+  }
+
+  getSelectedDate(): Observable<string> {
+    return this.selectedDateSubject.asObservable();
+  }
+
+  navigateToDate(date: string) {
+    const today = new Date().toISOString().split('T')[0];
+    const tomorrow = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
+    
+    // Only allow navigation to today, tomorrow, or past dates
+    if (date > tomorrow) return;
+    
+    this.selectedDateSubject.next(date);
+    
+    // Initialize empty task list if none exists for this date
+    const current = this.tasksSubject.value;
+    if (!current || current.date !== date) {
+      const historicalDay = this.historySubject.value.find(d => d.date === date);
+      if (historicalDay) {
+        this.tasksSubject.next(historicalDay);
+      } else {
+        this.tasksSubject.next({ date, tasks: [] });
+      }
+      this.saveTasks();
+    }
   }
 
   addTask(title: string): boolean {

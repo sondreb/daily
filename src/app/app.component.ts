@@ -20,6 +20,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   history: DailyTasks[] = [];
   editingTaskId: string | null = null;
   editingTaskText: string = '';
+  selectedDate: string = '';
   @ViewChild('editInput') editInput?: ElementRef;
   private shouldFocus = false;
 
@@ -40,6 +41,10 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
     this.taskService.getHistory().subscribe(history => {
       this.history = history;
+    });
+
+    this.taskService.getSelectedDate().subscribe(date => {
+      this.selectedDate = date;
     });
   }
 
@@ -90,5 +95,39 @@ export class AppComponent implements OnInit, AfterViewChecked {
 
   cancelEdit() {
     this.editingTaskId = null;
+  }
+
+  navigateDay(offset: number) {
+    const date = new Date(this.selectedDate);
+    date.setDate(date.getDate() + offset);
+    this.taskService.navigateToDate(date.toISOString().split('T')[0]);
+  }
+
+  formatDate(date: string): string {
+    const d = new Date(date);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+
+    if (d.toDateString() === today.toDateString()) return 'Today';
+    if (d.toDateString() === tomorrow.toDateString()) return 'Tomorrow';
+    
+    return d.toLocaleDateString('en-US', { 
+      weekday: 'short', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  }
+
+  isNextDisabled(): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const selectedDate = new Date(this.selectedDate);
+    selectedDate.setHours(0, 0, 0, 0);
+    
+    return selectedDate.getTime() >= tomorrow.getTime();
   }
 }

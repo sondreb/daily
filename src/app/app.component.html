@@ -1,41 +1,54 @@
 <div class="fullscreen-container">
   <div class="app-container">
     <h1>Daily Tasks</h1>
-    
+
+    <div class="date-navigation">
+      <button (click)="navigateDay(-1)" class="nav-button">← Previous</button>
+      <span class="current-date">{{ formatDate(selectedDate) }}</span>
+      <button
+        (click)="navigateDay(1)"
+        [disabled]="isNextDisabled()"
+        class="nav-button"
+      >
+        Next →
+      </button>
+    </div>
+
     <div class="tasks-container">
       <div class="add-task" *ngIf="currentTasks?.tasks?.length !== 3">
-        <input 
-          type="text" 
-          [(ngModel)]="newTaskTitle" 
+        <input
+          type="text"
+          [(ngModel)]="newTaskTitle"
           placeholder="Add new task..."
           (keyup.enter)="addTask()"
-        >
+        />
         <button (click)="addTask()">Add</button>
       </div>
 
       <div class="tasks-list">
         <div *ngFor="let task of currentTasks?.tasks" class="task-item">
-          <input 
-            type="checkbox" 
+          <input
+            type="checkbox"
             [checked]="task.completed"
             (change)="toggleTask(task.id)"
-          >
+          />
           <ng-container *ngIf="editingTaskId !== task.id; else editingTemplate">
-            <span 
+            <span
               [class.completed]="task.completed"
               (click)="startEditing(task)"
               class="task-text"
-            >{{task.title}}</span>
+              >{{ task.title }}</span
+            >
           </ng-container>
           <ng-template #editingTemplate>
-            <input 
+            <input
               type="text"
               [(ngModel)]="editingTaskText"
               (keyup.enter)="saveEdit()"
               (keyup.escape)="cancelEdit()"
               class="edit-input"
               #editInput
-            >
+            />
             <button class="save-button" (click)="saveEdit()">Save</button>
             <button class="cancel-button" (click)="cancelEdit()">Cancel</button>
           </ng-template>
@@ -43,21 +56,25 @@
       </div>
 
       <div class="tasks-remaining" *ngIf="currentTasks">
-        {{ 3 - (currentTasks.tasks.length) }} tasks remaining today
+        {{ 3 - currentTasks.tasks.length }} tasks remaining today
       </div>
     </div>
 
     <div class="history-container" *ngIf="history.length > 0">
       <h2>Previous Days</h2>
       <div *ngFor="let day of history" class="history-day">
-        <h3>{{day.date}}</h3>
+        <h3>{{ day.date }}</h3>
         <div *ngFor="let task of day.tasks" class="history-task">
-          <span [class.completed]="task.completed">{{task.title}}</span>
+          <span [class.completed]="task.completed">{{ task.title }}</span>
         </div>
       </div>
     </div>
   </div>
-  <button *ngIf="showInstallButton" (click)="installPwa()" class="install-button">
+  <button
+    *ngIf="showInstallButton"
+    (click)="installPwa()"
+    class="install-button"
+  >
     Install App
   </button>
 </div>
