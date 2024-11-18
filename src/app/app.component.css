@@ -120,3 +120,33 @@
   right: 20px;
   z-index: 1000;
 }
+
+.task-text {
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  flex: 1;
+}
+
+.task-text:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.edit-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-right: 8px;
+}
+
+.save-button, .cancel-button {
+  padding: 4px 8px;
+  font-size: 14px;
+  margin-left: 4px;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+}

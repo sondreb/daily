@@ -83,4 +83,16 @@ export class TaskService {
       this.saveTasks();
     }
   }
+
+  updateTask(taskId: string, newTitle: string) {
+    const current = this.tasksSubject.value;
+    if (!current) return;
+
+    const task = current.tasks.find(t => t.id === taskId);
+    if (task) {
+      task.title = newTitle;
+      this.tasksSubject.next(current);
+      this.saveTasks();
+    }
+  }
 }

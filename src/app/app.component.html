@@ -20,7 +20,25 @@
             [checked]="task.completed"
             (change)="toggleTask(task.id)"
           >
-          <span [class.completed]="task.completed">{{task.title}}</span>
+          <ng-container *ngIf="editingTaskId !== task.id; else editingTemplate">
+            <span 
+              [class.completed]="task.completed"
+              (click)="startEditing(task)"
+              class="task-text"
+            >{{task.title}}</span>
+          </ng-container>
+          <ng-template #editingTemplate>
+            <input 
+              type="text"
+              [(ngModel)]="editingTaskText"
+              (keyup.enter)="saveEdit()"
+              (keyup.escape)="cancelEdit()"
+              class="edit-input"
+              #editInput
+            >
+            <button class="save-button" (click)="saveEdit()">Save</button>
+            <button class="cancel-button" (click)="cancelEdit()">Cancel</button>
+          </ng-template>
         </div>
       </div>
 
