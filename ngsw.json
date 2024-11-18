@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1731946971782,
+  "timestamp": 1731947518389,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -27,8 +27,8 @@
         "ignoreVary": true
       },
       "urls": [
-        "/favicon.jpg",
-        "/icons/icon-1024x1024.png",
+        "/favicon.png",
+        "/icons/daily.png",
         "/icons/icon-128x128.png",
         "/icons/icon-144x144.png",
         "/icons/icon-152x152.png",
@@ -43,16 +43,16 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/favicon.jpg": "01d46a4b2cf5ec1ce891fd7d857b80f98c61f85b",
-    "/icons/icon-1024x1024.png": "c20f0f3a6d122b3dfc8091fdf5ebf5b695027e86",
-    "/icons/icon-128x128.png": "07f175e15e75fd930d9bcb3c4647ee5364a75887",
-    "/icons/icon-144x144.png": "999d9d25584ad96113fece0ca42aa79a6f89bbd8",
-    "/icons/icon-152x152.png": "b8b9418a8da868ed9c7472c399647e8a7915792e",
-    "/icons/icon-192x192.png": "79e868a207bea94ceb525ce00efc18ff1281bd60",
-    "/icons/icon-384x384.png": "d3b700e577b6ab34dd3095915148086971d4d76b",
-    "/icons/icon-512x512.png": "1ffc11937d9da8293298bbdf114eaab3f8a4945e",
-    "/icons/icon-72x72.png": "07e014e6396d2dec32e8951a0acfba01491a4de6",
-    "/icons/icon-96x96.png": "a60b453d376f086c0a06447305c705eec2d3dadc",
+    "/favicon.png": "e8f146b69afa195a685373a6735b723106ab9323",
+    "/icons/daily.png": "f8b01a2f8ac1ff805cd569ff8baf6e6c3d5ebe4f",
+    "/icons/icon-128x128.png": "73334cf14513bc69bac88e8833d31e265d77da46",
+    "/icons/icon-144x144.png": "5b75f8c6bd04912712a473897e68242513ab5a92",
+    "/icons/icon-152x152.png": "7b0e6dcf3e4a5c1dcd5821c9e9d19a475e37e47c",
+    "/icons/icon-192x192.png": "beec666420820fa6ffd4108d54daa15b269ba0d8",
+    "/icons/icon-384x384.png": "4aff25f1a019813ccac069861e9d051fe0792a92",
+    "/icons/icon-512x512.png": "670b1953abf8a8b7f996571299e99821f3d3edbf",
+    "/icons/icon-72x72.png": "995bb19ef0116d00b6c319672cb3044fdd1010a6",
+    "/icons/icon-96x96.png": "5dd1d9687d55fe39e3c39a7e12d790fbec2cbace",
     "/index.html": "ee98b7ed97b8e45b8302cc78ad6da4fb59adc73b",
     "/main-GA72GTXY.js": "dcee35785da47ec8157bc1eb25ce916ffb367797",
     "/manifest.webmanifest": "434e25373a4d618a1d711144443643b7f9251de4",
