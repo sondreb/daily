@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1731950981846,
+  "timestamp": 1732110974122,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -12,7 +12,7 @@
       },
       "urls": [
         "/index.html",
-        "/main-ZOZECUGY.js",
+        "/main-DJM4CJLN.js",
         "/manifest.webmanifest",
         "/polyfills-FFHMD2TL.js",
         "/styles-CBLPM2R2.css"
@@ -53,8 +53,8 @@
     "/icons/icon-512x512.png": "670b1953abf8a8b7f996571299e99821f3d3edbf",
     "/icons/icon-72x72.png": "995bb19ef0116d00b6c319672cb3044fdd1010a6",
     "/icons/icon-96x96.png": "5dd1d9687d55fe39e3c39a7e12d790fbec2cbace",
-    "/index.html": "222a652dc8a15130df3d86c9cc19d42826670054",
-    "/main-ZOZECUGY.js": "0dd80c8690281459de9ccdf67e7939106f0332e4",
+    "/index.html": "8aa03abc61862df2a2438bf213496c36441d062f",
+    "/main-DJM4CJLN.js": "d29e7d4721b8ff8a9556f904d42a3835a3924b30",
     "/manifest.webmanifest": "434e25373a4d618a1d711144443643b7f9251de4",
     "/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
     "/styles-CBLPM2R2.css": "c7693205f296592a705ade1ee69434bcc3a16f2b"
